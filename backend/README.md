@@ -1,4 +1,4 @@
-#<<<<<<<<<<<<<*PICOMMERCE* >>>>>>>>>>>>>>
+##<<<<<<<<<<<<<*PICOMMERCE* >>>>>>>>>>>>>>
 ## Rutas a productos
 ###*Crear productos.*
 Metodo: POST\
