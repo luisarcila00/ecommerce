@@ -1,20 +1,20 @@
-#<<<<<<<<<<<<<*PICOMMERCE* >>>>>>>>>>>>>>
+#PICOMMERCE
 ## Rutas a productos
-###*Crear productos.*
+###Crear productos.
 Metodo: POST\
 Ruta: http://localhost:3000/api/products \
 Headers: `'token': 'Se obtiene al iniciar sesión'`,`'Content-type':'multipart/form-data'` \
 Body: `'description': 'nombre_del_producto''`, `'code':'codigo numerico y unico'`, `'price':'precio base del producto'`,
 `'category':'categoria del producto'`, `'logo':'imagen del producto'` 
 
-###*Obtener todos los productos.*
+###Obtener todos los productos.
 Metodo: GET\
 Ruta: http://localhost:3000/api/products \
 Headers: `'token': 'Se obtiene al iniciar sesión y debe ser usuario administrador'`
 
 ##Rutas a categorias
 
-###*Crear categoria.*
+###Crear categoria.
 Metodo: POST\
 Ruta: http://localhost:3000/api/categories \
 Headers: `'token': 'Se obtiene al iniciar sesión debe ser usuario administrador'` \
@@ -22,17 +22,17 @@ Body: `{
 "name":"El nombre para la categoria"
 }`
 
-###*Obtener todas las categorias.*
+###Obtener todas las categorias.
 Metodo: GET\
 Ruta: http://localhost:3000/api/categories \
 Headers: `'token': 'Se obtiene al iniciar sesión y debe ser usuario administrador'`
 
 ##Rutas a Login y registro
-###*Login.*
+###Login.
 Metodo: POST\
 Ruta: http://localhost:3000/api/login \
 Body: `{"username":"El usuario","password":"La contraseña"}`
-###*Registro.*
+###Registro.
 Metodo: POST\
 Ruta: http://localhost:3000/api/signup \
 Body: 
