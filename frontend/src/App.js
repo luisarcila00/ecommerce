@@ -1,14 +1,25 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Router from "./routes";
+import "./App.css";
+
+import Navbar from "./components/Navbar";
+import {Route,Routes} from "react-router-dom";
+import Home from './pages/Home';
+import Usuarios from './pages/Usuarios';
+import Products from './pages/Products';
+import Categorias from './pages/Categorias';
 
 function App() {
   return (
-      <div className="App">
-        <header className="App-header">
-          <Router/>
-        </header>
-      </div>
+    <>
+    <Navbar/>
+    <Routes>
+        
+        <Route path="/" element={<Home />} />
+        <Route path="/usuarios" element={<Usuarios />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/categorias" element={<Categorias />} />
+
+      </Routes>
+    </>
   );
 }
 
