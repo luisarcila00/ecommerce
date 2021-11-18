@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { SidebarData } from './SidebarData';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
+import { NavbarData } from './NavbarData';
 
 function Navbar() {
   const [sidebar, setSidebar] = useState(false);
@@ -18,6 +19,18 @@ function Navbar() {
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
+          <div className='btn-nav'>
+          {NavbarData.map((item, index) =>{
+            return(
+              <li key={index} className={item.cName}>
+                  <Link to={item.path}>
+                  {item.icon}
+                    <span><b>{item.title}</b></span>
+                  </Link>
+                </li>
+            )
+          })}
+          </div>  
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
@@ -39,6 +52,7 @@ function Navbar() {
           </ul>
         </nav>
       </IconContext.Provider>
+      
     </>
   );
 }
