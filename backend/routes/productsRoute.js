@@ -4,8 +4,6 @@ const {body} = require('express-validator');
 const {isUser, isAdmin} = require('../middleware/auth');
 const {validation} = require('../middleware/helpers');
 const {productController} = require('../controllers')
-const moment = require('moment')
-moment.locale('es')
 
 router.get('/', isUser, productController.get_all_products);
 

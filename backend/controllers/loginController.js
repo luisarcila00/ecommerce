@@ -44,17 +44,5 @@ module.exports = {
       })
       if (err) throw err;
     });
-  },
-  signUp(req, res, next) {
-    const newUser = new usersModel(req.body);
-    // Guarda el usuario
-    newUser.save().then(() => {
-      next({status: 200, message: {success: true, message: 'Nuevo usuario creado con éxito.'}})
-    }, (err) => {
-      if (err.code === 11000) {
-        return next({status: 400, message: {success: false, message: 'El nombre de usuario ya existe'}})
-      }
-      next({status: 400, message: {success: false, message: err.message}})
-    });
   }
 }
