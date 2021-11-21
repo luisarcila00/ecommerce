@@ -1,20 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
+const moment = require('moment')
+moment.locale('es')
 const UserSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  roles: {
-    type: String,
-    required: true
-  },
+  username: {type: String, unique: true, required: true},
+  password: {type: String, required: true},
+  roles: {type: String, required: true},
   full_name: {type: String},
   parent_id: {type: String},
   balance: {type: Number, default: 0},
@@ -27,8 +19,8 @@ const UserSchema = new Schema({
   city: {type: String},
   birth_date: {type: String},
   email: {type: String},
-  creation_date: {type: String, default: Date.now},
-  enabled: {type: Boolean, default: false},
+  creation_date: {type: Date, default: moment().format('YYYY-MM-DD HH:mm:ss')},
+  enabled: {type: Boolean, default: true},
   deleted: {type: Boolean, default: false},
   password_changed: {type: Boolean, default: false},
   IP: {type: String},

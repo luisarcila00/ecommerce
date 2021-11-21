@@ -1,10 +1,12 @@
 import React from 'react';
-
+import UsersTable from "../components/Users/UsersTable";
+import {Container} from "react-bootstrap"
 function Usuarios () {
   return (
-    <div className='usuarios'>
-      <h1>EDITAR USUARIOS</h1>
-    </div>
+    <Container>
+      <UsersTable/>
+    </Container>
+
   );
 }
 
