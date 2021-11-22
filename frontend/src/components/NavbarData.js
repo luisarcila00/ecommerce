@@ -2,11 +2,7 @@ import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 
 export const NavbarData = [
-  {
-    title: 'PI COMMERCE',
-    path: '/',
-    cName: 'nav-text'
-  },
+
   {
     title: 'CONTENIDO',
     path: '/usuarios',

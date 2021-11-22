@@ -18,7 +18,9 @@ function Navbar() {
         <div className='navbar'>
           <Link to='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
+            <a href="index.html">PI-COMMERCE</a>
           </Link>
+          
           <div className='btn-nav'>
           {NavbarData.map((item, index) =>{
             return(
@@ -31,12 +33,17 @@ function Navbar() {
             )
           })}
           </div>  
+          <div className="header-links">
+        <a href="cart.html">Cart</a>
+        <a href="signin.html" > Sign In</a>
+      </div>
         </div>
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <ul className='nav-menu-items' onClick={showSidebar}>
             <li className='navbar-toggle'>
+            <h3>Admin Categories</h3>
               <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
+                <AiIcons.AiOutlineClose className="sidebar-close-button"/>
               </Link>
             </li>
             {SidebarData.map((item, index) => {
