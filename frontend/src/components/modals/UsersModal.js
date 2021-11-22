@@ -51,10 +51,10 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
     event.preventDefault();
     const form = event.currentTarget;
     if (!(form.checkValidity())) {
-      //event.stopPropagation();
+      event.stopPropagation();
     } else {
       //en caso de que los datos del formulario sean validos se ejecuta este código
-      createUser(event)
+      createUser()
     }
     setValidated(true);
   };
@@ -74,7 +74,7 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
       console.log(response)
     }
   }
-  const createUser = async (event) => {
+  const createUser = async () => {
     try {
       const user = {
         full_name,
