@@ -3,9 +3,12 @@ import {Table, Button, Row, Col, Alert} from 'react-bootstrap'
 import {ObjData} from "./UsersRow";
 import {UsersModal} from "../modals/UsersModal";
 import {users} from "../../controllers/UsersController";
+import {regions} from "../../controllers/statesAndCitiesController";
 
 const UsersTable = () => {
-  const [userModalShow, setUserModalShow] = useState(false)
+  const [userModalShow, setUserModalShow] = useState({show: false})
+  const [modalData, setModalData] = useState({})
+  const [states, setStates] = useState([]);
   const [tableData, setTableData] = useState([])
   const [successText, setsuccessText] = useState('')
   const [showAlert, setShowAlert] = useState(false)
@@ -20,9 +23,25 @@ const UsersTable = () => {
   useEffect(() => {
     fetchData();
   }, [setTableData]);
-
-  const handleModal = (band) => {
+  useEffect(async () => await getStates(), [setStates])
+  const getStates = async () => {
+    try {
+      const {data} = await regions.getStates()
+      setStates(data)
+    } catch ({response}) {
+      console.log(response)
+    }
+  }
+  const handleModal = async (band) => {
     setUserModalShow(band)
+    if (band.show) {
+      if (band.data) {
+        const row = tableData.find(row => row._id === band.data.id)
+        setModalData(row)
+      }
+    } else {
+      setModalData({})
+    }
   }
   const handleSuccesAlert = (band) => {
     setShowAlert(band)
@@ -35,9 +54,17 @@ const UsersTable = () => {
   const habdleSuccessText = (text) => {
     setsuccessText(text)
   }
-  const modal = userModalShow ?
-    <UsersModal modalTitle={'Crear usuario'} habdleSuccessText={habdleSuccessText} handleSuccesAlert={handleSuccesAlert}
-                setUserModalShow={handleModal} UserModalShow={userModalShow}/> : null;
+  const forModal = {
+    userModalShow,
+    states,
+    habdleSuccessText,
+    handleSuccesAlert,
+    modalData,
+    setUserModalShow: handleModal
+  }
+
+  const modal = userModalShow.show ?
+    <UsersModal options={forModal}/> : null;
   const successAlert = showAlert ?
     <Row>
       <Alert as={Col} variant={'success'}>{successText}</Alert>
@@ -47,7 +74,9 @@ const UsersTable = () => {
       {modal}
       <Row>
         <Col md={10}/>
-        <Button className="mb-3 mt-lg-5" as={Col} onClick={() => setUserModalShow(true)} variant="success">Crear
+        <Button className="mb-3 mt-lg-5" as={Col}
+                onClick={() => handleModal({show: true, title: 'Crear usuario', disableInputs: false})}
+                variant="success">Crear
           usuario</Button>
       </Row>
       {successAlert}
@@ -64,7 +93,7 @@ const UsersTable = () => {
           </thead>
           <tbody>
           {tableData.length ? tableData.map(objPerson => {
-            return <ObjData setUserModalShow={setUserModalShow} objPerson={objPerson} key={objPerson._id}/>
+            return <ObjData setUserModalShow={handleModal} objPerson={objPerson} key={objPerson._id}/>
           }) : <tr>
             <td colSpan="12">No hay datos para mostrar</td>
           </tr>

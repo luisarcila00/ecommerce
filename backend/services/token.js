@@ -9,8 +9,8 @@ async function checkToken(token) {
   } catch (e) {
     return false;
   }
-  console.log(__id);
   let user = await User.findById(__id).lean();
+  console.log(user._id, user.full_name)
   if (user) {
     const token = jwt.sign({
       id: __id,
