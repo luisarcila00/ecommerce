@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
-import { NavbarData } from "./NavbarData";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
@@ -50,7 +49,9 @@ function Navbar() {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="signin.html"> Sign In</Nav.Link>
+            <Nav.Link >
+              <Link to='/singing'> Sign In </Link>
+            </Nav.Link>
           </Nav.Item>
         </Nav>
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
