@@ -1,44 +1,56 @@
-import React, {useState} from "react";
-import {Table, Button, Row, Col} from 'react-bootstrap'
+import React, {useState, useEffect} from "react";
+import {Table, Button, Row, Col, Alert} from 'react-bootstrap'
 import {ObjData} from "./UsersRow";
 import {UsersModal} from "../modals/UsersModal";
+import {users} from "../../controllers/UsersController";
 
-const datos = [{
-  _id: '13231',
-  username: 'luisarcila00',
-  full_name: 'Luis Eduardo Arcila Trujillo',
-  roles: 'Administrador',
-  balance: '$0'
-},
-  {
-    _id: '775675',
-    username: 'johanap',
-    full_name: 'Johana Andrea Parra Serna',
-    roles: 'Distribuidor',
-    balance: '$5.000'
-  },
-  {_id: '353456', username: '24618375', full_name: 'Ana Julia Trujillo', roles: 'Punto de venta', balance: '$50.000'},
-  {
-    _id: '32423',
-    username: 'jacinto',
-    full_name: 'Jacinto Manuel Quito Chame',
-    roles: 'Punto de venta',
-    balance: '$500.000'
-  }]
 const UsersTable = () => {
   const [userModalShow, setUserModalShow] = useState(false)
+  const [tableData, setTableData] = useState([])
+  const [successText, setsuccessText] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
+  const fetchData = async () => {
+    try {
+      const {data} = await users.getUsers()
+      setTableData(data)
+    } catch ({response}) {
+      console.log(response)
+    }
+  }
+  useEffect(() => {
+    fetchData();
+  }, [setTableData]);
+
   const handleModal = (band) => {
     setUserModalShow(band)
   }
+  const handleSuccesAlert = (band) => {
+    setShowAlert(band)
+    fetchData();
+    setTimeout(() => {
+      setsuccessText('')
+      setShowAlert(!band)
+    }, 10000)
+  }
+  const habdleSuccessText = (text) => {
+    setsuccessText(text)
+  }
   const modal = userModalShow ?
-    <UsersModal modalTitle={'Crear usuario'} setUserModalShow={handleModal} UserModalShow={userModalShow}/> : null;
+    <UsersModal modalTitle={'Crear usuario'} habdleSuccessText={habdleSuccessText} handleSuccesAlert={handleSuccesAlert}
+                setUserModalShow={handleModal} UserModalShow={userModalShow}/> : null;
+  const successAlert = showAlert ?
+    <Row>
+      <Alert as={Col} variant={'success'}>{successText}</Alert>
+    </Row> : null;
   return (
     <>
       {modal}
       <Row>
         <Col md={10}/>
-        <Button className="mb-3 mt-lg-5" as={Col} onClick={() => setUserModalShow(true)} variant="success">Crear usuario</Button>
+        <Button className="mb-3 mt-lg-5" as={Col} onClick={() => setUserModalShow(true)} variant="success">Crear
+          usuario</Button>
       </Row>
+      {successAlert}
       <Row>
         <Table striped bordered hover>
           <thead>
@@ -51,9 +63,12 @@ const UsersTable = () => {
           </tr>
           </thead>
           <tbody>
-          {datos.map(objPerson => {
-            return <ObjData objPerson={objPerson} key={objPerson.id}/>
-          })}
+          {tableData.length ? tableData.map(objPerson => {
+            return <ObjData setUserModalShow={setUserModalShow} objPerson={objPerson} key={objPerson._id}/>
+          }) : <tr>
+            <td colSpan="12">No hay datos para mostrar</td>
+          </tr>
+          }
           </tbody>
         </Table>
       </Row>

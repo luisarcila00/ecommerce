@@ -6,8 +6,8 @@ const {validation} = require('../middleware/helpers');
 const {usersController} = require('../controllers')
 
 router.get('/', isReseller, usersController.get_all_users);
-
-router.post("/create",isReseller, [
+router.get('/:id',isReseller,  usersController.get_by_id)
+router.post("/create", isReseller, [
   body('username', 'Es necesario ingresar un usuario').notEmpty().isLength({min: 5}).toLowerCase().trim().escape(),
   body('password', 'Es necesario ingresar una contraseña').notEmpty().isLength({min: 5}).toLowerCase().trim().escape(),
   body('full_name', 'Debe ingresar un nombre para el usuario').notEmpty().isLength({min: 5}).toUpperCase().trim().escape(),
@@ -16,8 +16,7 @@ router.post("/create",isReseller, [
   body('roles', 'Debe ingresar el tipo de usuario').notEmpty().trim().escape(),
   body('phone', 'Debe ingresar un numero de telefono').notEmpty().isLength({min: 10}).isNumeric().toInt(),
   body('address', 'Debe ingresar una dirección de residencia').notEmpty(),
-  body('email', 'Debe ingresar una dirección de correo electrónico').notEmpty().isEmail().normalizeEmail(),
+  body('email', 'Debe ingresar una dirección de correo electrónico').normalizeEmail(),
 ], validation, usersController.create_user)
-
 
 module.exports = router;
