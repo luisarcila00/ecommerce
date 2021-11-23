@@ -1,11 +1,35 @@
-import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import Cards from '../components/Cards';
+import CarouselHome from '../components/CarouselHome';
+import '../components/Home.css'
 
-function Home() {
+
+
+
+
+const Home = () => {
   return (
-    <div className='home'>
-      <h1>Home</h1>
-    </div>
-  );
+    <>
+      <div class="home">
+        
+        <Container>
+          <Row>
+            <Col xs={{ order: 'last' }}></Col>
+            <Col xs><CarouselHome /></Col>
+            <Col xs={{ order: 'first' }}></Col>
+          </Row>
+          <br></br>
+          <Row>
+            <Col xs={{ order: 'last' }}><Cards/></Col>
+            <Col xs><Cards /></Col>
+            <Col xs><Cards /></Col>
+            <Col xs={{ order: 'first' }}><Cards/></Col>
+          </Row>
+            
+        </Container>
+      </div>
+    </>
+  )
 }
 
-export default Home;
+export default Home
