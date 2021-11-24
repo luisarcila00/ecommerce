@@ -42,7 +42,7 @@ export const UsersModal = ({options}) => {
   const handleUserType = (e) => setRoles(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
   const handleConfirmPassword = (e) => setConsfirmPassword(e.target.value);
-  useEffect(async () => await getCities(selectedStates), [selectedStates])
+  useEffect(() => getCities(selectedStates), [selectedStates])
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -5,7 +5,7 @@ module.exports = class productsController {
   static async get_all_products(req, res) {
     try {
       let products = await productsModel.find()
-      res.status(200).json({result: 'success', data: products})
+      res.status(200).json(products)
     } catch (e) {
       res.status(500).json({result: 'error', message: 'Se presento un error interno en el servidor'})
     }
@@ -33,16 +33,18 @@ module.exports = class productsController {
             product_id: product.code,
             product_description: product.description
           }//Esto esta pendiente
-          res.status(200).json({result: 'success', message: `Producto creado con exito`});
+          res.status(200).json(`Producto creado con exito`);
         } catch (e) {
+          debug('Error line 38', e.message)
           if (e.code === 11000) {
-            return res.status(404).json({message: 'El ' + Object.keys(e.keyPattern)[0] + ' ' + e.keyValue[Object.keys(e.keyPattern)[0]] + ' ya existe'});
+            return res.status(404).json('El ' + Object.keys(e.keyPattern)[0] + ' ' + e.keyValue[Object.keys(e.keyPattern)[0]] + ' ya existe');
           }
-          res.status(404).json({message: e.message});
+          res.status(500).json('Se presento un error interno en el servidor');
         }
       })
     } catch (error) {
-      res.status(404).json({message: error.message});
+      debug('Error line 46', error.message)
+      res.status(500).json('Se presento un error interno en el servidor');
     }
   }
 
