@@ -12,7 +12,9 @@ export const ObjData = ({objCategory}) => {
   }
   return (
     <tr onClick={handleRow}>
-      <td>{objCategory.Category }</td>
+      <td>{objCategory.categoria }</td>
+      <td>{objCategory.imagen }</td>
+      <td>{objCategory.descripcion }</td>
       <td>
         <Button variant={"primary"} onClick={handleEdit}>Editar</Button>
         &nbsp;

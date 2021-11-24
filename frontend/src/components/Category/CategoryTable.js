@@ -6,15 +6,21 @@ import { CategoryModal } from "../modals/CategoryModal";
 const datos = [
   {
     _id: "132",
-    categoria: "Electrónica"
+    categoria: "Electrónica",
+    imagen: "",
+    descripcion: "artículos de electrónica"
   },
   {
     _id: "775",
-    categoria: "películas"
+    categoria: "películas",
+    imagen: "",
+    descripcion: "artículos de películas"
   },
   { 
     _id: "353",
-    categoria: "Aseo"
+    categoria: "Aseo",
+    imagen: "",
+    descripcion: "artículos de aseo"
   },
 ];
 const CategoriesTable = () => {
@@ -40,7 +46,7 @@ const CategoriesTable = () => {
           onClick={() => setCategoryModalShow(true)}
           variant="success"
         >
-          Crear usuario
+          Crear categoría
         </Button>
       </Row>
       <Row>
@@ -48,6 +54,8 @@ const CategoriesTable = () => {
           <thead>
             <tr>
               <th>Categoria</th>
+              <th>Imagen</th>
+              <th>Descripción</th>
               <th>Acciones</th>
             </tr>
           </thead>
