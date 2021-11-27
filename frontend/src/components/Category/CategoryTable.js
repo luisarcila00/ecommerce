@@ -23,15 +23,18 @@ const datos = [
     descripcion: "artículos de aseo"
   },
 ];
-const CategoriesTable = () => {
-  const [categoryModalShow, setCategoryModalShow] = useState(false);
+
+
+const CategoryTable = () => {
+  const [categoryModalShow, setcategoryModalShow] = useState(false);
   const handleModal = (band) => {
-    setCategoryModalShow(band);
+    setcategoryModalShow(band);
   };
+
   const modal = categoryModalShow ? (
     <CategoryModal
       modalTitle={"Crear Categoría"}
-      setCategoryModalShow={handleModal}
+      setcategoryModalShow={handleModal}
       categoryModalShow={categoryModalShow}
     />
   ) : null;
@@ -43,7 +46,7 @@ const CategoriesTable = () => {
         <Button
           className="mb-3 mt-lg-5"
           as={Col}
-          onClick={() => setCategoryModalShow(true)}
+          onClick={() => handleModal(true)}
           variant="success"
         >
           Crear categoría
@@ -69,4 +72,4 @@ const CategoriesTable = () => {
     </>
   );
 };
-export default CategoriesTable;
+export default CategoryTable;
