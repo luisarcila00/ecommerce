@@ -2,26 +2,20 @@ const express = require('express');
 const path = require('path');
 const fileUpload = require('express-fileupload')
 const fs = require('fs')
-//const cookieParser = require('cookie-parser');
 //const logger = require('morgan');
 const cors = require('cors');
 const debug = require('debug')('picommerce:app');
 const app = express();
-const mongoose = require("mongoose");
-mongoose.Promise = global.Promise;
-mongoose
-    .connect(process.env.DATABASE, {useNewUrlParser: true})
-    .then(() => debug("connection to database succesful"))
-    .catch(err => console.error(err));
+require('./database')
 //app.use(logger('dev'));
 app.use(cors());
 app.use(fileUpload())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 //app.use(cookieParser());
-!fs.existsSync(path.join(__dirname, '/public')) ? fs.mkdirSync(path.join(__dirname, '/public')) : null
-!fs.existsSync(path.join(__dirname, '/public/images')) ? fs.mkdirSync(path.join(__dirname, '/public/images')) : null
-!fs.existsSync(path.join(__dirname, '/public/images/products')) ? fs.mkdirSync(path.join(__dirname, '/public/images/products')) : null
+if (!fs.existsSync(path.join(__dirname, '/public'))) fs.mkdirSync(path.join(__dirname, '/public'))
+if (!fs.existsSync(path.join(__dirname, '/public/images'))) fs.mkdirSync(path.join(__dirname, '/public/images'))
+if (!fs.existsSync(path.join(__dirname, '/public/images/products'))) fs.mkdirSync(path.join(__dirname, '/public/images/products'))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', require('./routes'));
 

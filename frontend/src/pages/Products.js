@@ -1,10 +1,12 @@
 import React from 'react';
+import {Container} from "react-bootstrap";
+import ProductsTable from "../components/products/ProductsTable";
 
 function Products() {
   return (
-    <div className='products'>
-      <h1>Products</h1>
-    </div>
+    <Container>
+      <ProductsTable/>
+    </Container>
   );
 }
 

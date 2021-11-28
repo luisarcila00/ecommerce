@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const {Schema, model} = require("mongoose");
 const bcrypt = require("bcryptjs");
 const moment = require('moment')
 moment.locale('es')
@@ -51,4 +50,4 @@ UserSchema.methods.comparePassword = function (passw, cb) {
     cb(null, isMatch);
   });
 };
-module.exports = mongoose.model("Users", UserSchema);
+module.exports = model("Users", UserSchema);
