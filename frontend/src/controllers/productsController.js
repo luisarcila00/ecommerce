@@ -6,7 +6,12 @@ const products = {
   getProducts: () => httpClient.get(END_POINT),
   getById: (sku) => httpClient.get(END_POINT + '/' + sku),
   createProduct: (product) => httpClient.post(END_POINT , product),
-  updateProduct: (product, sku) => httpClient.put(END_POINT + '/' + sku, product),
+  createProductWithImage : (product) => httpClient.post(END_POINT, product, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  }),
+  updateProduct: (product, id) => httpClient.put(END_POINT + '/' + id, product),
   deleteUser: (sku) => httpClient.delete(END_POINT + '/' + sku),
 }
 export {

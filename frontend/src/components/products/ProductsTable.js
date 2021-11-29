@@ -27,9 +27,19 @@ const ProductsTable = () => {
       field: "description",
     },
     {
+      title: "Imagen",
+      field: "galery",
+      render: rowData => <img src={"http://localhost:4000" + rowData.gallery} style={{width: 100, borderRadius: '50%'}}/>
+    },
+    {
       title: "Precio",
       field: "price",
       type: "numeric",
+      cellStyle: {width: '200px'}
+    },
+    {
+      title: "Categoria",
+      field: "category",
       cellStyle: {width: '200px'}
     },
     {
@@ -63,6 +73,7 @@ const ProductsTable = () => {
     setProductModalShow(band)
     if (band.show) {
       if (band.data) {
+        debugger
         setModalData(band.data)
       }
     } else {
@@ -94,40 +105,40 @@ const ProductsTable = () => {
   const modal = productModalShow.show ? <ProductsModal options={forModal}/> : null;
   const successAlert = showAlert ? <Row><Alert as={Col} variant={'success'}>{successText}</Alert></Row> : null;
   return (
-    <>
-      {modal}
-      <Row>
-        <Col md={10}/>
-        <Button className="mb-3 mt-lg-5" as={Col}
-                onClick={() => handleModal({show: true, title: 'Crear producto', disableInputs: false})}
-                variant="success">Crear
-          producto</Button>
-      </Row>
-      {successAlert}
-      <Row>
-        <MaterialTable
-          columns={columns}
-          icons={tableIcons}
-          data={tableData}
-          actions={[
-            {
-              icon: tableIcons.Edit,
-              tooltip: 'Editar producto',
-              onClick: handleEdit
-            },
-            {
-              icon: tableIcons.Delete,
-              tooltip: 'Eliminar produto',
-              onClick: (event, rowData) => alert("You delete " + rowData.username)
-            },
-          ]}
-          options={options}
-          isLoading={tableData.length ? false : true}
-          localization={tableLocalization}
-          title={false}
-        />
-      </Row>
-    </>
+      <>
+        {modal}
+        <Row>
+          <Col md={10}/>
+          <Button className="mb-3 mt-lg-5" as={Col}
+                  onClick={() => handleModal({show: true, title: 'Crear producto', disableInputs: false})}
+                  variant="success">Crear
+            producto</Button>
+        </Row>
+        {successAlert}
+        <Row>
+          <MaterialTable
+              columns={columns}
+              icons={tableIcons}
+              data={tableData}
+              actions={[
+                {
+                  icon: tableIcons.Edit,
+                  tooltip: 'Editar producto',
+                  onClick: handleEdit
+                },
+                {
+                  icon: tableIcons.Delete,
+                  tooltip: 'Eliminar produto',
+                  onClick: (event, rowData) => alert("You delete " + rowData.name)
+                },
+              ]}
+              options={options}
+              isLoading={tableData.length ? false : true}
+              localization={tableLocalization}
+              title={false}
+          />
+        </Row>
+      </>
   )
 }
 export default ProductsTable

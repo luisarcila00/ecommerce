@@ -8,7 +8,7 @@ const productSchema = new Schema({
   stock: {type: Number, required: true, default: 0},
   discount: {type: Number, default: 0},
   poster: {type: String},
-  galery: {type: String},
+  gallery: {type: String},
   category: Array,
   created_at: {type: Date, default: Date.now}
 });
