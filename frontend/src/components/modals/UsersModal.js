@@ -4,146 +4,119 @@ import moment from "moment"
 import {regions} from "../../controllers/statesAndCitiesController"
 import {users} from "../../controllers/UsersController"
 
-export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleSuccesAlert, habdleSuccessText}) => {
+const objForm = {
+  _id: "",
+  full_name: "",
+  document_type: "",
+  document: "",
+  birth_date: "",
+  address: "",
+  phone: "",
+  state: "",
+  city: "",
+  username: "",
+  roles: "",
+  password: "",
+  confirmPassword: "",
+}
+const errText = {
+  username: 'Debe ingresar un nombre de usuario.',
+  modalConfirm: '',
+  address: 'Debe proporcionar una dirección de residencia.',
+  full_name: 'Debe ingresar un nombre.',
+  document: "Debe ingresar un número de documento válido.",
+  birth_date: "",
+  email:"Debe proporcionar un correo electronico válido cuenta@ejemplo.com.",
+  phone: "Debe proporcionar un numero de teléfono válido.",
+  select: "Selecciona una opción válida.",
+  password: "Debe ingresar una contraseña.",
+  confirmPassword: "Debe ingresar la confirmación de contraseña.",
+}
+export const UsersModal = ({options}) => {
   const [validated, setValidated] = useState(false);
-  const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
-
-  const [full_name, setFull_name] = useState('');
-  const [document_type, setDocumentType] = useState('');
-  const [document, setDocument] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [selectedStates, setSelectedStates] = useState('');
-  const [selectedCities, setSelectedCities] = useState('');
-  const [username, setUsername] = useState('');
-  const [roles, setRoles] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConsfirmPassword] = useState('');
-  const [usernameError, setusernameError] = useState('Debe ingresar un nombre de usuario.');
-  const [errText, setErrText] = useState('');
+  const [form, setForm] = useState(objForm)
+  const [objErr, setObjErr] = useState(errText);
   const [showErr, setShowErr] = useState(false)
-  const errAlert = showErr ?
-    <Alert variant={'danger'}>{errText}</Alert> : null;
+  const errAlert = showErr ? <Alert variant={'danger'}>{objErr.modalConfirm}</Alert> : null;
 
-
-  const handleFullName = (e) => setFull_name(e.target.value);
-  const handledocumentType = (e) => setDocumentType(e.target.value);
-  const handledocument = (e) => setDocument(e.target.value);
-  const handleBirthDate = (e) => setBirthDate(e.target.value);
-  const handleAddress = (e) => setAddress(e.target.value);
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePhone = (e) => setPhone(e.target.value);
-  const handleSelectedState = (e) => {
-    getCities(e.target.value)
-    setSelectedStates(e.target.value)
+  const handleForm = (e) => {
+    let obj = {...form, [e.target.name]: e.target.value}
+    setForm(obj)
   }
-  const handleSelectedCity = (e) => setSelectedCities(e.target.value)
-  const handleUsername = (e) => setUsername(e.target.value);
-  const handleUserType = (e) => setRoles(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleConfirmPassword = (e) => setConsfirmPassword(e.target.value);
 
+  useEffect(() => getCities(form.state), [form.state])
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     if (!(form.checkValidity())) {
-      //event.stopPropagation();
+      event.stopPropagation();
     } else {
       //en caso de que los datos del formulario sean validos se ejecuta este código
-      createUser(event)
+      createUser()
     }
     setValidated(true);
   };
   const getCities = async (state) => {
     try {
+      if (!state) return
       const {data} = await regions.getCities(state)
       setCities(data)
     } catch ({response}) {
       console.log(response)
     }
   }
-  const getStates = async () => {
+  const createUser = async () => {
     try {
-      const {data} = await regions.getStates()
-      setStates(data)
-    } catch ({response}) {
-      console.log(response)
-    }
-  }
-  const createUser = async (event) => {
-    try {
-      const user = {
-        full_name,
-        document_type,
-        document,
-        birthDate,
-        address,
-        email,
-        phone,
-        selectedStates,
-        selectedCities,
-        username,
-        roles,
-        password,
-        confirmPassword
-      }
-      const crear = await users.createUser(user)
+      const crear = options.userModalShow.title === 'Crear usuario' ? await users.createUser(form) : await users.editUser(form, form._id)
       handleClose()
-      setFull_name('');
-      setDocumentType('');
-      setDocument('');
-      setBirthDate('');
-      setAddress('');
-      setEmail('');
-      setPhone('');
-      setSelectedStates('');
-      setSelectedCities('');
-      setUsername('');
-      setRoles('');
-      setPassword('');
-      setConsfirmPassword('');
-      habdleSuccessText(crear.data);
-      handleSuccesAlert(true);
+      setAll({})
+      options.habdleSuccessText(crear.data);
+      options.handleSuccesAlert(true);
     } catch ({response}) {
-      setErrText(response.data)
+      setObjErr(response && response.data ? {...objErr, modalConfirm: response.data} : {
+        ...objErr,
+        modalConfirm: 'Se presento un error'
+      })
       setShowErr(true)
       setTimeout(() => {
-        setErrText('')
+        setObjErr({...objErr, modalConfirm: ''})
         setShowErr(false)
       }, 10000)
     }
   }
-
+  const setAll = (data) => {
+    setForm(data);
+  }
   useEffect(() => {
-    getStates()
-  }, [setStates])
-
-  const handleClose = () => setUserModalShow(false);
-
+    setAll(options.modalData)
+  }, [options.modalData])
+  const handleClose = () => options.setUserModalShow({show: false, title: options.userModalShow.title});
   return (
     <Modal
       size="lg"
-      show={UserModalShow}
-      onHide={() => setUserModalShow(false)}
+      show={options.userModalShow.show}
+      onHide={() => options.setUserModalShow({show: false, title: options.userModalShow.title})}
       aria-labelledby="users-modal-title"
     >
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title id="users-modal-title">
-            {modalTitle}
+            {options.userModalShow.title}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group id={'full_name'} className="mb-3">
             <FloatingLabel controlId="floatingInputGrid" label="Nombre del cliente">
-              <Form.Control required value={full_name} onChange={handleFullName} type="text"
+              <Form.Control required
+                            name={'full_name'}
+                            value={form.full_name}
+                            onChange={handleForm}
+                            type="text"
                             placeholder="Nombre del cliente"/>
               <Form.Control.Feedback type="invalid">
-                Debe ingresar un nombre.
+                {objErr.full_name}
               </Form.Control.Feedback>
             </FloatingLabel>
           </Form.Group>
@@ -151,23 +124,30 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingSelectGrid" label="Tipo de documento">
-                  <Form.Select onChange={handledocumentType} value={document_type} required
+                  <Form.Select required
+                               name={'document_type'}
+                               onChange={handleForm}
+                               value={form.document_type}
                                aria-label="Tipo de documento">
                     <option></option>
                     <option value="cc">CEDULA DE CIUDADANIA</option>
                     <option value="nit">NIT</option>
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
-                    Selecciona una opción válida
+                    {objErr.select}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Número de documento">
-                  <Form.Control required value={document} onChange={handledocument} type="number"
+                  <Form.Control required
+                                name={'document'}
+                                value={form.document}
+                                onChange={handleForm}
+                                type="number"
                                 placeholder="Número de documento"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe ingresar un número de documento válido.
+                    {objErr.document}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
@@ -177,16 +157,24 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Fecha de nacimiento">
-                  <Form.Control value={birthDate} onChange={handleBirthDate} type="date"
+                  <Form.Control value={form.birth_date}
+                                name={'birth_date'}
+                                onChange={handleForm}
+                                type="date"
                                 max={moment().subtract(18, 'year').format('YYYY-MM-DD')}
                                 placeholder="01/01/1900"/>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Dirección">
-                  <Form.Control required value={address} onChange={handleAddress} type="text" placeholder="Dirección"/>
+                  <Form.Control required
+                                name={'address'}
+                                value={form.address}
+                                onChange={handleForm}
+                                type="text"
+                                placeholder="Dirección"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe proporcionar una dirección de residencia.
+                    {objErr.address}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
@@ -196,17 +184,26 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Correo electrónico">
-                  <Form.Control value={email} onChange={handleEmail} type="email" placeholder="correo@ejemplo.com"/>
+                  <Form.Control value={form.email}
+                                name={'email'}
+                                onChange={handleForm}
+                                type="email"
+                                placeholder="correo@ejemplo.com"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe proporcionar un correo electronico válido cuenta@ejemplo.com.
+                    {objErr.email}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Teléfono">
-                  <Form.Control required value={phone} onChange={handlePhone} type="number" placeholder="Teléfono"/>
+                  <Form.Control required
+                                name={'phone'}
+                                value={form.phone}
+                                onChange={handleForm}
+                                type="number"
+                                placeholder="Teléfono"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe proporcionar un numero de teléfono válido.
+                    {objErr.phone}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
@@ -216,25 +213,33 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingSelectGrid" label="Departamento">
-                  <Form.Select required value={selectedStates} aria-label="Departamento" onChange={handleSelectedState}>
+                  <Form.Select required
+                               name={'state'}
+                               value={form.state}
+                               aria-label="Departamento"
+                               onChange={handleForm}>
                     <option/>
-                    {states.map(state =>
+                    {options.states.map(state =>
                       <option key={state.id} value={state.id}>{state.name}</option>)}
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
-                    Selecciona una opción válida
+                    {objErr.select}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingSelectGrid" label="Ciudad">
-                  <Form.Select required value={selectedCities} aria-label="Ciudad" onChange={handleSelectedCity}>
+                  <Form.Select required
+                               name={'city'}
+                               value={form.city}
+                               aria-label="Ciudad"
+                               onChange={handleForm}>
                     <option/>
                     {cities.map(city =>
                       <option key={city.id} value={city.id}>{city.name}</option>)}
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
-                    Selecciona una opción válida
+                    {objErr.select}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
@@ -244,16 +249,23 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Nombre de usuario">
-                  <Form.Control required value={username} onChange={handleUsername} type="text"
+                  <Form.Control required
+                                value={form.username}
+                                name={'username'}
+                                onChange={handleForm}
+                                type="text"
                                 placeholder="Nombre de usuario"/>
                   <Form.Control.Feedback type="invalid">
-                    {usernameError}
+                    {objErr.username}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingSelectGrid" label="Seleccione un tipo de usuario">
-                  <Form.Select value={roles} onChange={handleUserType} required
+                  <Form.Select value={form.roles} onChange={handleForm}
+                               name={'roles'}
+                               required={options.userModalShow.data ? false : true}
+                               disabled={options.userModalShow.data ? true : false}
                                aria-label="Seleccione un tipo de usuario">
                     <option></option>
                     <option value="reseller">Distribuidor</option>
@@ -262,7 +274,7 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
                     <option value="admin">Administrador</option>
                   </Form.Select>
                   <Form.Control.Feedback type="invalid">
-                    Selecciona una opción válida
+                    {objErr.select}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
@@ -272,21 +284,37 @@ export const UsersModal = ({modalTitle, UserModalShow, setUserModalShow, handleS
             <Row className="g-2">
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Contraseña">
-                  <Form.Control required value={password} onChange={handlePassword} type="password"
+                  <Form.Control required={options.userModalShow.data ? false : true}
+                                disabled={options.userModalShow.data ? true : false}
+                                name={'password'}
+                                value={options.userModalShow.data ? '*********' : form.password}
+                                onChange={handleForm}
+                                type="password"
                                 placeholder="Contraseña"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe ingresar una contraseña.
+                    {objErr.password}
                   </Form.Control.Feedback>
                 </FloatingLabel>
               </Col>
               <Col md>
                 <FloatingLabel controlId="floatingInputGrid" label="Confirmar contraseña">
-                  <Form.Control required value={confirmPassword} onChange={handleConfirmPassword} min-length={5}
+                  <Form.Control required={options.userModalShow.data ? false : true}
+                                disabled={options.userModalShow.data ? true : false}
+                                name={'confirmPassword'}
+                                value={options.userModalShow.data ? '*********' : form.confirmPassword}
+                                onChange={handleForm} min-length={5}
                                 type="password" placeholder="Confirmar contraseña"/>
                   <Form.Control.Feedback type="invalid">
-                    Debe ingresar la confirmación de contraseña.
+                    {objErr.confirmPassword}
                   </Form.Control.Feedback>
                 </FloatingLabel>
+              </Col>
+            </Row>
+          </Form.Group>
+          <Form.Group>
+            <Row>
+              <Col>
+                <Form.Control value={form._id} type="hidden"/>
               </Col>
             </Row>
           </Form.Group>

@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const StatesSchema = new Schema({
-  description: {type:String, required:true},
-  username:{type:String},
-  password:{type:String},
-  sales_message:{type:String},
-  profiles:{type:String},
-  code: {type:String,unique:true, required:true},
-  price: {type:Number, required:true},
-  images: [String],
+const {Schema, model} = require("mongoose");
+const productSchema = new Schema({
+  sku: {type: String, required: true, unique: true},
+  name: {type: String, required: true},
+  description: {type: String, required: true},
+  sales_message: {type: String},
+  price: {type: Number, required: true, default: 0},
+  stock: {type: Number, required: true, default: 0},
+  discount: {type: Number, default: 0},
+  poster: {type: String},
+  gallery: {type: String},
   category: Array,
-  created_at: {type:Date, required:true, default:Date.now}
+  created_at: {type: Date, default: Date.now}
 });
 
-module.exports = mongoose.model("Products", StatesSchema);
+module.exports = model("Products", productSchema);

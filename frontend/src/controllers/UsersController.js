@@ -4,8 +4,9 @@ const END_POINT = '/api/users';
 
 const users = {
   getUsers: () => httpClient.get(END_POINT),
+  getById: (id) => httpClient.get(END_POINT + '/' + id),
   createUser: (user) => httpClient.post(END_POINT + '/create', user),
-  editUser: (user, code) => httpClient.post(END_POINT + '/' + code, user),
+  editUser: (user, id) => httpClient.put(END_POINT + '/' + id, user),
   deleteUser: (code) => httpClient.get(END_POINT + '/' + code),
 }
 export {

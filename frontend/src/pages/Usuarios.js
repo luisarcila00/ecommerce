@@ -6,7 +6,6 @@ function Usuarios () {
     <Container>
       <UsersTable/>
     </Container>
-
   );
 }
 

@@ -5,11 +5,13 @@ const {isUser, isAdmin} = require('../middleware/auth');
 const {validation} = require('../middleware/helpers');
 const {productController} = require('../controllers')
 
-router.get('/', isUser, productController.get_all_products);
+router.get('/', productController.get_all_products);
+router.get('/:id', isAdmin, productController.get_product_by_Id);
 
+router.put('/:id',isAdmin,productController.updateProduct)
 router.post('/', isAdmin, [
   body('description', 'Descripción no valida').notEmpty().trim().escape().toLowerCase(),
-  body('code', 'Código no valido').isNumeric().toInt(),
+  body('sku', 'SKU no valido').notEmpty().trim().escape().toLowerCase(),
   body('price', 'Precio no valido').isNumeric().toInt(),
   body('category', 'Categoria no valida').notEmpty(),
 ], validation, productController.create_product);
