@@ -1,8 +1,10 @@
 const {token} = require('../services');
 const {usersModel} = require("../models");
+const debug = require('debug')('picommerce:loginController')
 module.exports = {
   login(req, res, next) {
-    usersModel.findOne({username: req.body.username}).then(function (user) {
+    const {username, password} = req.body
+    usersModel.findOne({username}).then(function (user) {
       if (!user) return next({
         status: 404,
         message: {
@@ -11,17 +13,11 @@ module.exports = {
         }
       })
       // Revisar si la contraseña coincide
-      user.comparePassword(req.body.password, function (err, isMatch) {
-        if (!isMatch || err) return next({
-          status: 401,
-          message: {
-            message: 'Falló la autenticación. Contraseña incorrecta.',
-            success: false
-          }
-        })
+      user.comparePassword(password, function (err, isMatch) {
+        if (!isMatch || err) return res.status(401).json('Falló la autenticación. Contraseña incorrecta.')
         // Si encontro usuario y la contraseña coincide crea un token
         user = user.toJSON()
-        token.encode({
+        const usr_token = token.encode({
           id: user._id,
           username: user.username,
           full_name: user.full_name,
@@ -29,20 +25,13 @@ module.exports = {
           balance_commission: user.balance_comision,
           password_changed: user.password_changed,
           rol: user.roles
-        }).then(token => {
-          // Retorna la informacion incluyendo el token
-          next({status: 200, message: {success: true, token: token}})
         })
+        // Retorna la informacion incluyendo el token
+        res.status(200).json(usr_token)
       });
     }, err => {
-      next({
-        status: 500,
-        message: {
-          message: 'Se presento un error interno en el servidor',
-          success: false
-        }
-      })
-      if (err) throw err;
+      debug('Error line 39', err.message)
+      res.status(200).json('Se presento un error interno en el servidor')
     });
   }
 }

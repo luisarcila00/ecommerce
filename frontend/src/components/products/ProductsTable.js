@@ -3,35 +3,48 @@ import {Button, Row, Col, Alert} from 'react-bootstrap'
 import MaterialTable from "material-table";
 import {tableIcons} from "../../helpers/tables/materialIcons";
 import {tableLocalization} from "../../helpers/tables/tableLocalization";
-import {UsersModal} from "../modals/UsersModal";
-import {users} from "../../controllers/UsersController";
-import {regions} from "../../controllers/statesAndCitiesController";
+import {ProductsModal} from "../modals/ProductModal";
+import {products} from "../../controllers/productsController";
 
-const UsersTable = () => {
-  const [userModalShow, setUserModalShow] = useState({show: false})
+const ProductsTable = () => {
+  const [productModalShow, setProductModalShow] = useState({show: false})
   const [modalData, setModalData] = useState({})
-  const [states, setStates] = useState([]);
   const [tableData, setTableData] = useState([])
   const [successText, setsuccessText] = useState('')
   const [showAlert, setShowAlert] = useState(false)
   const columns = [
     {
-      title: "Usuario",
-      field: "username"
+      title: "SKU",
+      field: "sku"
     },
     {
       title: "Nombre",
-      field: "full_name",
+      field: "name",
       cellStyle: {width: '500px'}
     },
     {
-      title: "Rol",
-      field: "roles",
-      lookup: {provider: 'Proveedor', pdv: 'Punto de venta', reseller: 'Distribuidor', admin: 'Administrador'}
+      title: "Descripcion",
+      field: "description",
     },
     {
-      title: "Saldo",
-      field: "balance",
+      title: "Imagen",
+      field: "galery",
+      render: rowData => <img src={"http://localhost:4000" + rowData.gallery} style={{width: 100, borderRadius: '50%'}}/>
+    },
+    {
+      title: "Precio",
+      field: "price",
+      type: "numeric",
+      cellStyle: {width: '200px'}
+    },
+    {
+      title: "Categoria",
+      field: "category",
+      cellStyle: {width: '200px'}
+    },
+    {
+      title: "Stock",
+      field: "stock",
       type: "numeric",
       cellStyle: {width: '200px'}
     }
@@ -50,24 +63,17 @@ const UsersTable = () => {
   }
   const fetchData = async () => {
     try {
-      const {data} = await users.getUsers()
+      const {data} = await products.getProducts()
       setTableData(data)
     } catch ({response}) {
       console.log(response)
     }
   }
-  const getStates = async () => {
-    try {
-      const {data} = await regions.getStates()
-      setStates(data)
-    } catch ({response}) {
-      console.log(response)
-    }
-  }
   const handleModal = (band) => {
-    setUserModalShow(band)
+    setProductModalShow(band)
     if (band.show) {
       if (band.data) {
+        debugger
         setModalData(band.data)
       }
     } else {
@@ -86,19 +92,17 @@ const UsersTable = () => {
     setsuccessText(text)
   }
   const handleEdit = (e, rowData) => {
-    handleModal({show: true, title: 'Editar usuario', data: rowData})
+    handleModal({show: true, title: 'Editar producto', data: rowData})
   }
   const forModal = {
-    userModalShow,
-    states,
+    productModalShow,
     habdleSuccessText,
     handleSuccesAlert,
     modalData,
-    setUserModalShow: handleModal
+    setProductModalShow: handleModal
   }
   useEffect(() => fetchData(), [setTableData]);
-  useEffect(() => getStates(), [setStates])
-  const modal = userModalShow.show ? <UsersModal options={forModal}/> : null;
+  const modal = productModalShow.show ? <ProductsModal options={forModal}/> : null;
   const successAlert = showAlert ? <Row><Alert as={Col} variant={'success'}>{successText}</Alert></Row> : null;
   return (
       <>
@@ -106,9 +110,9 @@ const UsersTable = () => {
         <Row>
           <Col md={10}/>
           <Button className="mb-3 mt-lg-5" as={Col}
-                  onClick={() => handleModal({show: true, title: 'Crear usuario', disableInputs: false})}
+                  onClick={() => handleModal({show: true, title: 'Crear producto', disableInputs: false})}
                   variant="success">Crear
-            usuario</Button>
+            producto</Button>
         </Row>
         {successAlert}
         <Row>
@@ -119,13 +123,13 @@ const UsersTable = () => {
               actions={[
                 {
                   icon: tableIcons.Edit,
-                  tooltip: 'Editar usuario',
+                  tooltip: 'Editar producto',
                   onClick: handleEdit
                 },
                 {
                   icon: tableIcons.Delete,
-                  tooltip: 'Eliminar usuario',
-                  onClick: (event, rowData) => alert("You delete " + rowData.username)
+                  tooltip: 'Eliminar produto',
+                  onClick: (event, rowData) => alert("You delete " + rowData.name)
                 },
               ]}
               options={options}
@@ -137,4 +141,4 @@ const UsersTable = () => {
       </>
   )
 }
-export default UsersTable
+export default ProductsTable
