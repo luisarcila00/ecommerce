@@ -7,20 +7,17 @@
 }
 
 
+
 .navbar a {
     color: #fff;
-
     font-weight: bold;
     text-decoration: none;
     text-align: left;
 }
 
 .nav-link {
-   
     font-size: 1.5rem;
 }
-
-
 
 .menu-bars {
     margin-left: 0.5rem;
@@ -30,7 +27,6 @@
 .menu-bars svg{
     justify-content: center;
 }
-
 
 .nav-menu {
     background-color: #060b26;
@@ -117,11 +113,16 @@ span {
     background-color:#fff;
     
   }
+
+
 /* Form */
 .form {
+    position: fixed;
+    top: 30%;
+    right: 30%;
     max-width: 40rem;
     margin: 0 auto;
-  }
+}
   .form > div {
     display: flex;
     flex-direction: column;
@@ -131,4 +132,3 @@ span {
     margin: 1rem 0;
   }
 
- 
