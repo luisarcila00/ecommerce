@@ -63,6 +63,7 @@ module.exports = class productsController {
         price: req.body.price,
         category: req.body.category
       }
+
       if (req.files && ('logo' in req.files)) {
         if (req.files.logo.mimetype.indexOf('image') < 0) return res.status(400).json('El tipo de archivo seleccionado no es válido');
         let target_path = path.join(__dirname.replace(/controllers/gm, ''), `public/images/products/${req.body.sku}.${req.files.logo.mimetype.replace('image/', '')}`)

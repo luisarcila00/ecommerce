@@ -47,7 +47,7 @@ const Navbar = () => {
   <nav className="navbar navbar-expand-lg navbar-mainbg">
     
       <NavLink className="navbar-brand navbar-logo" to="/" exact>
-        Web Solutions
+        Pi-Commerce
       </NavLink>
     
     
@@ -107,10 +107,10 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/singing" exact>
+              <NavLink className="nav-link" to="/login" exact>
                 <i 
                 className="far fa-copy">
-                </i>Singing
+                </i>Login
               </NavLink>
             </li>
         </ul>

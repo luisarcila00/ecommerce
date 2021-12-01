@@ -8,7 +8,7 @@ import Usuarios from './pages/Usuarios';
 import Products from './pages/Products';
 import Categorias from './pages/Categorias';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SingingScreen from "./pages/SingingScreen";
+import LoginScreen from "./pages/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen";
 import {BrowserRouter} from "react-router-dom";
 import About from './pages/About/About';
@@ -31,7 +31,7 @@ function App() {
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/products" element={<Products />} />
         <Route path="/categorias" element={<Categorias />} />
-        <Route path="/singing" element={<SingingScreen />} />
+        <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
         <Route path="/about" element={<About/>} />
         <Route path="/service" element={<Services/>} />
