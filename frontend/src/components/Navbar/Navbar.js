@@ -3,6 +3,7 @@ import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 
+
 const Navbar = () => {
 
   function animation(){
@@ -115,6 +116,7 @@ const Navbar = () => {
             </li>
         </ul>
       </div>
+
   </nav>
   )
 }

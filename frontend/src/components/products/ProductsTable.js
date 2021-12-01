@@ -115,7 +115,7 @@ const ProductsTable = () => {
             producto</Button>
         </Row>
         {successAlert}
-        <Row>
+        <Row className="container">
           <MaterialTable
               columns={columns}
               icons={tableIcons}
