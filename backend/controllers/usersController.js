@@ -13,7 +13,6 @@ module.exports = class usersController {
   }
 
   static create_user(req, res) {
-    if (req.body.password !== req.body.confirmPassword) return res.status(400).json('La contraseña no coincide con la confirmación de contraseña')
     const usuario = {
       full_name: req.body.full_name,
       document_type: req.body.document_type,
@@ -22,8 +21,8 @@ module.exports = class usersController {
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
-      state: req.body.selectedStates,
-      city: req.body.selectedCities,
+      state: req.body.state,
+      city: req.body.city,
       username: req.body.username,
       roles: req.body.roles,
       password: req.body.password,
@@ -34,7 +33,7 @@ module.exports = class usersController {
     newUser.save().then(() => {
       res.status(200).json('Nuevo usuario creado con éxito.')
     }, (e) => {
-      debug('Error en la linea 37', e.message)
+      debug('Error en la linea 36', e.message)
       if (e.code === 11000) {
         return res.status(400).json('El nombre de usuario ya existe')
       }
@@ -53,8 +52,8 @@ module.exports = class usersController {
         address: req.body.address,
         email: req.body.email,
         phone: req.body.phone,
-        state: req.body.selectedStates,
-        city: req.body.selectedCities,
+        state: req.body.state,
+        city: req.body.city,
         username: req.body.username,
       }
       await usersModel.updateOne(req.user.roles === 'admin' ? {_id: id} : {
@@ -63,7 +62,7 @@ module.exports = class usersController {
       }, dataToUpdate)
       res.status(200).json('Se actualizaron los datos del usuario de forma exitosa.')
     } catch (e) {
-      debug('Error en la linea 67', e.message)
+      debug('Error en la linea 65', e.message)
       if (e.code === 11000) {
         return res.status(400).json('El nombre de usuario ya existe')
       }

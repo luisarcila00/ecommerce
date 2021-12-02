@@ -24,7 +24,7 @@ async function checkToken(token) {
 
 module.exports = {
   //generar el token
-  encode: async (payload) => {
+  encode: (payload) => {
     const token = jwt.sign(payload, process.env.SECRET_TOKEN || 'your-256-bit-secret', {expiresIn: '1d'});
     return token;
   },
