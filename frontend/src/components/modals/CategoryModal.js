@@ -67,12 +67,8 @@ const insertarImagen = async () => {
               <h3>Imagen</h3>
               <input required type="file" name="files" multiple onChange={(e) => subirImagen(e.target.files)}/>
                 <br/><br/>
-                <Button className="btn btn-primary" onClick={() => insertarImagen}>
-                  Insertar imágenes
-                </Button>
               <Form.Control.Feedback type="invalid">
-                Debe ingresar una imagen.
-                
+                Debe ingresar una imagen.                
               </Form.Control.Feedback>
             </FloatingLabel>
           </Form.Group>
@@ -88,7 +84,7 @@ const insertarImagen = async () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
+          <Button variant="secondary" onClick={handleClose, insertarImagen}>Cerrar</Button>
           <Button type={'submit'} variant="primary">Guardar</Button>
         </Modal.Footer>
       </Form>
