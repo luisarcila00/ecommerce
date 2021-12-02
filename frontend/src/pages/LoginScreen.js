@@ -28,13 +28,13 @@ const fetch = async () => {
 }
 
   return (
-    <div className="container">
+    <div>
       <Form className="text-center" style={{paddingTop: "30%"}} onSubmit={handleSubmit} >
         <Form.Group>
-          <h3>¡Hola! Ingresa tu e‑mail o usuario</h3>
+          <h3>¡Hola! Ingresa tu usuario</h3>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email o Usuario</Form.Label>
+          <Form.Label>Usuario</Form.Label>
           <Form.Control name={"username"} value={userData.username} onChange={handleUserData} type="text" placeholder="Ingresa tu email o Usuario" />
           <Form.Text className="text-muted">
             Nosotros nunca compartiremos tu informacion con otros.

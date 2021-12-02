@@ -3,6 +3,7 @@ import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import $ from 'jquery';
 
+
 const Navbar = () => {
 
   function animation(){
@@ -47,7 +48,7 @@ const Navbar = () => {
   <nav className="navbar navbar-expand-lg navbar-mainbg">
     
       <NavLink className="navbar-brand navbar-logo" to="/" exact>
-        Pi-Commerce
+        Pi-Commerce                                              
       </NavLink>
     
     
@@ -62,7 +63,7 @@ const Navbar = () => {
  
       <div 
         className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav ml-auto">
+        <ul className="navbar-nav ms-auto">
             
             <div className="hori-selector">
               <div className="left"></div>
@@ -109,12 +110,13 @@ const Navbar = () => {
             <li className="nav-item">
               <NavLink className="nav-link" to="/login" exact>
                 <i 
-                className="far fa-copy">
+                className="fas fa-sign-in-alt">
                 </i>Login
               </NavLink>
             </li>
         </ul>
       </div>
+
   </nav>
   )
 }
