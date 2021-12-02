@@ -15,6 +15,7 @@ import About from './pages/About/About';
 import Services from './pages/Service/Services';
 import Testimonial from './pages/Testimonial/Testimonial';
 import Contact from './pages/Contact/Contact';
+import { Container, Row, Col } from "react-bootstrap";
 
 
 
@@ -23,9 +24,15 @@ function App() {
     <BrowserRouter>
     <Navbar/>
     <SidebarComp/>
+    
     <main>
-
-    <Routes>
+    <Container>
+      <Row>
+        <Col xs={6} md={4}>
+          
+        </Col>
+      <Col sm={{ span: 10, offset: 1 }}>
+      <Routes>
         
         <Route path="/" element={<Home />} />
         <Route path="/usuarios" element={<Usuarios />} />
@@ -42,6 +49,10 @@ function App() {
 
 
       </Routes>
+      </Col>
+    
+      </Row>
+      </Container>
       </main>
 
     </BrowserRouter>
