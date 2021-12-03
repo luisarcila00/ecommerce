@@ -1,62 +1,33 @@
-import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import SidebarComp from "./components/Sidebar/SidebarComp";
-
-import {Route,Routes} from "react-router-dom";
-import Home from './pages/Home/Home';
-import Usuarios from './pages/Usuarios';
-import Products from './pages/Products';
-import Categorias from './pages/Categorias';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginScreen from "./pages/LoginScreen";
-import RegisterScreen from "./pages/RegisterScreen";
-import {BrowserRouter} from "react-router-dom";
-import About from './pages/About/About';
-import Services from './pages/Service/Services';
-import Testimonial from './pages/Testimonial/Testimonial';
-import Contact from './pages/Contact/Contact';
-import { Container, Row, Col } from "react-bootstrap";
+import { AuthContext } from './auth/authContext';
+import { useEffect, useReducer } from 'react';
+import  authReducer  from './auth/authReducer';
+import { AppRouter } from './routers/AppRouter';
 
-
-
-function App() {
-  return (
-    <BrowserRouter>
-    <Navbar/>
-    <SidebarComp/>
-    
-    <main>
-    <Container>
-      <Row>
-        <Col xs={6} md={4}>
-          
-        </Col>
-      <Col sm={{ span: 10, offset: 1 }}>
-      <Routes>
-        
-        <Route path="/" element={<Home />} />
-        <Route path="/usuarios" element={<Usuarios />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/login" element={<LoginScreen />} />
-        <Route path="/register" element={<RegisterScreen />} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/service" element={<Services/>} />
-
-        <Route path="/testimonial" element={<Testimonial/>} />
-
-        <Route path="/contact" element={<Contact/>} />
-
-
-      </Routes>
-      </Col>
-    
-      </Row>
-      </Container>
-      </main>
-
-    </BrowserRouter>
-  );
+const init = () => {
+  return JSON.parse( localStorage.getItem('user') ) || { logged: false };
 }
 
-export default App;
+ const App = () => {
+
+  const [ user, dispatch ] = useReducer( authReducer, {}, init );
+
+  useEffect(() => {
+      debugger
+      if ( !user ) return;
+
+      localStorage.setItem('user', JSON.stringify(user) );
+  }, [ user ])
+
+
+  return (
+    <AuthContext.Provider value={{
+        user,
+        dispatch
+    }}>
+        <AppRouter />
+    </AuthContext.Provider>
+)
+}
+
+export default App
