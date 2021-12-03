@@ -9,10 +9,9 @@ import '../components/Home.css'
 
 const Home = () => {
   return (
-    <>
-      <div class="home">
+      <div className="container">
         
-        <Container>
+        <Container  style={{paddingTop: "5%", position:'relative', left:'70px'}} >
           <Row>
             <Col xs={{ order: 'last' }}></Col>
             <Col xs><CarouselHome /></Col>
@@ -28,7 +27,6 @@ const Home = () => {
             
         </Container>
       </div>
-    </>
   )
 }
 

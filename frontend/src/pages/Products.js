@@ -4,7 +4,7 @@ import ProductsTable from "../components/products/ProductsTable";
 
 function Products() {
   return (
-    <Container>
+    <Container style={{paddingTop: "5%", position:'relative', left:'70px'}} >
       <ProductsTable/>
     </Container>
   );

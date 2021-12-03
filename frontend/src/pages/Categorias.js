@@ -5,7 +5,7 @@ import {Container} from "react-bootstrap"
 function Categorias () {
 
   return (
-    <Container>
+    <Container  style={{paddingTop: "5%", position:'relative', left:'80px'}} >
       <CategoryTable/>
     </Container>
 

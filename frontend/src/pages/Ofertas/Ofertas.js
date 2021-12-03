@@ -11,7 +11,7 @@ const Ofertas = () => {
         Ofertas
       </h1>
       <hr />
-      <Container>
+      <Container style={{paddingTop: "5%", position:'relative', left:'80px'}}>
         <Row>
           <Col md={3}>
             <Card style={{ width: "18rem" }}>

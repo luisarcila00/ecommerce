@@ -12,11 +12,11 @@ import img9 from "../Service/disney.png"
 const Services = () => {
   return (
     <div className="container">
-      <h1 className="text-center" style={{ paddingTop: "10%" }}>
+      <h1 className="text-center" style={{paddingTop: "5%", position:'relative'}}>
         Services
       </h1>
       <hr />
-      <Accordion>
+      <Accordion style={{paddingTop: "5%", position:'relative', left:'80px'}}>
         <Accordion.Item eventKey="0">
           <Accordion.Header>Plataformas de Streaming</Accordion.Header>
           <Accordion.Body>
@@ -79,7 +79,7 @@ const Services = () => {
         </Accordion.Item>
       </Accordion>
       <hr />
-      <Table >
+      <Table style={{paddingTop: "5%", position:'relative', left:'80px'}}>
       
         <tbody>
           <tr>
