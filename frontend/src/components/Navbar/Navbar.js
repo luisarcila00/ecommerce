@@ -94,10 +94,10 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/testimonial" exact>
+              <NavLink className="nav-link" to="/ofertas" exact>
                 <i 
                 className="far fa-chart-bar">
-                </i>Testimonial
+                </i>Ofertas
               </NavLink>
             </li>
             <li className="nav-item">
