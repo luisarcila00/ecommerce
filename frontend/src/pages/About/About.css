@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+.title {
+    background: #060b26;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    /* fallback for old browsers */
+    padding: 1rem;
+    border-left: 10px solid #1826a0ba;
+}
+
+.subtitle {
+    background: #1826a0ba;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    /* fallback for old browsers */
+    padding: 1rem;
+    border-left: 10px solid #060b26;
+}
+
+.img {
+    width: 100%;
+    height: 100%;
+}
+
+.text {
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+}
+
+.card-content {
+    background: #060b26;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    /* fallback for old browsers */
+    padding: 1rem;
+    border-left: 10px solid #1826a0ba;
+}
+
+.text-decorate {
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    border: 2px dashed #1826a0ba;
+}
