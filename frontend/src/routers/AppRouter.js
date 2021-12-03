@@ -6,7 +6,7 @@ import {DashboardRoutes} from "./DashboardRoutes";
 import Navbar from "../components/Navbar/Navbar";
 import About from "../pages/About/About";
 import Services from "../pages/Service/Services";
-import Testimonial from "../pages/Testimonial/Testimonial";
+import Ofertas from "../pages/Ofertas/Ofertas";
 import Contact from "../pages/Contact/Contact";
 import Home from '../pages/Home';
 import {useContext} from "react";
@@ -20,11 +20,11 @@ export const AppRouter = () => {
       <Navbar/>
       {user.logged ? <SidebarComp/> : null}
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/service" element={<Services/>}/>
-        <Route path="/testimonial" element={<Testimonial/>}/>
-        <Route path="/contact" element={<Contact/>}/>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/service" element={<Services />} />
+      <Route path="/ofertas" element={<Ofertas />} />
+      <Route path="/contact" element={<Contact />} />
         <Route
           path="/*"
           element={

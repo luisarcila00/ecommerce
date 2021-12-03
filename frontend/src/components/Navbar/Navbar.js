@@ -118,19 +118,19 @@ const Navbar = () => {
             <NavLink className="nav-link" to="/service" exact>
               <i
                 className="far fa-clone">
-              </i>Services
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/testimonial" exact>
-              <i
+                </i>Services
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/ofertas" exact>
+                <i 
                 className="far fa-chart-bar">
-              </i>Testimonial
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/contact" exact>
-              <i
+                </i>Ofertas
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/contact" exact>
+                <i 
                 className="far fa-copy">
               </i>Contact Us
             </NavLink>
