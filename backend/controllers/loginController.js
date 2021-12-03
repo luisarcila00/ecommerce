@@ -13,7 +13,7 @@ module.exports = {
         user = user.toJSON()
         const usr_token = token.encode({id: user._id})
         // Retorna la informacion incluyendo el token
-        res.status(200).json(usr_token)
+        res.status(200).json({usr_token, rol: user.roles})
       });
     }, err => {
       debug('Error line 39', err.message)
