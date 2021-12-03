@@ -47,7 +47,8 @@ const About = () => {
             </Col>
           </Row>
         </Col>
-      </Row>     
+      </Row>
+      </div>     
   )
 }
 export default About;
