@@ -23,7 +23,6 @@ const LoginScreen = () => {
     try {
       let {data} = await Login.login(userData)
       localStorage.setItem('UID', data)
-      console.log(data);
     } catch ({response}) {
       debugger
       let obj = {...userData, err: response.data}

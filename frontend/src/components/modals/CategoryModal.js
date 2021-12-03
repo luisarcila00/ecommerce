@@ -84,7 +84,7 @@ const insertarImagen = async () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose, insertarImagen}>Cerrar</Button>
+          <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
           <Button type={'submit'} variant="primary">Guardar</Button>
         </Modal.Footer>
       </Form>
