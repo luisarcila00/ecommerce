@@ -27,7 +27,7 @@ const UsersTable = () => {
     {
       title: "Rol",
       field: "roles",
-      lookup: {'pdv': 'Punto de venta', 'reseller': 'Distribuidor', 'admin': 'Administrador'}
+      lookup: {provider: 'Proveedor', pdv: 'Punto de venta', reseller: 'Distribuidor', admin: 'Administrador'}
     },
     {
       title: "Saldo",
@@ -101,40 +101,40 @@ const UsersTable = () => {
   const modal = userModalShow.show ? <UsersModal options={forModal}/> : null;
   const successAlert = showAlert ? <Row><Alert as={Col} variant={'success'}>{successText}</Alert></Row> : null;
   return (
-    <>
-      {modal}
-      <Row>
-        <Col md={10}/>
-        <Button className="mb-3 mt-lg-5" as={Col}
-                onClick={() => handleModal({show: true, title: 'Crear usuario', disableInputs: false})}
-                variant="success">Crear
-          usuario</Button>
-      </Row>
-      {successAlert}
-      <Row>
-        <MaterialTable
-          columns={columns}
-          icons={tableIcons}
-          data={tableData}
-          actions={[
-            {
-              icon: tableIcons.Edit,
-              tooltip: 'Editar usuario',
-              onClick: handleEdit
-            },
-            {
-              icon: tableIcons.Delete,
-              tooltip: 'Eliminar usuario',
-              onClick: (event, rowData) => alert("You delete " + rowData.username)
-            },
-          ]}
-          options={options}
-          isLoading={tableData.length ? false : true}
-          localization={tableLocalization}
-          title={false}
-        />
-      </Row>
-    </>
+      <>
+        {modal}
+        <Row>
+          <Col md={10}/>
+          <Button className="mb-3 mt-lg-5" as={Col}
+                  onClick={() => handleModal({show: true, title: 'Crear usuario', disableInputs: false})}
+                  variant="success">Crear
+            usuario</Button>
+        </Row>
+        {successAlert}
+        <Row>
+          <MaterialTable
+              columns={columns}
+              icons={tableIcons}
+              data={tableData}
+              actions={[
+                {
+                  icon: tableIcons.Edit,
+                  tooltip: 'Editar usuario',
+                  onClick: handleEdit
+                },
+                {
+                  icon: tableIcons.Delete,
+                  tooltip: 'Eliminar usuario',
+                  onClick: (event, rowData) => alert("You delete " + rowData.username)
+                },
+              ]}
+              options={options}
+              isLoading={tableData.length ? false : true}
+              localization={tableLocalization}
+              title={false}
+          />
+        </Row>
+      </>
   )
 }
 export default UsersTable

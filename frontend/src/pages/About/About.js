@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {Row, Col, Image} from 'react-bootstrap'
 import './About.css'
 import logo from './Img/logo.jpeg'
@@ -46,10 +47,7 @@ const About = () => {
             </Col>
           </Row>
         </Col>
-      </Row>
-      
-      
-    </div>
+      </Row>     
   )
 }
 export default About;

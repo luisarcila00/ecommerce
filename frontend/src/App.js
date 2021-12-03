@@ -1,29 +1,27 @@
-import "./App.css";
-import Navbar from "./components/Navbar";
-import {Route,Routes} from "react-router-dom";
-import Home from './pages/Home';
-import Usuarios from './pages/Usuarios';
-import Products from './pages/Products';
-import Categorias from './pages/Categorias';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SingingScreen from "./pages/SingingScreen";
-import RegisterScreen from "./pages/RegisterScreen";
+import {AuthContext} from './auth/authContext';
+import {useEffect, useReducer} from 'react';
+import authReducer from './auth/authReducer';
+import {AppRouter} from './routers/AppRouter';
 
-function App() {
-  return (
-    <>
-    <Navbar/>
-    <Routes>
-        
-        <Route path="/" element={<Home />} />
-        <Route path="/usuarios" element={<Usuarios />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/categorias" element={<Categorias />} />
-        <Route path="/singing" element={<SingingScreen />} />
-        <Route path="/register" element={<RegisterScreen />} />
-      </Routes>
-    </>
-  );
+const init = () => {
+  return JSON.parse(localStorage.getItem('user')) || {logged: false};
 }
 
-export default App;
+const App = () => {
+  const [user, dispatch] = useReducer(authReducer, {}, init);
+
+  useEffect(() => {
+    if (!user) return;
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user])
+
+
+  return (
+    <AuthContext.Provider value={{user, dispatch}}>
+      <AppRouter/>
+    </AuthContext.Provider>
+  )
+}
+
+export default App

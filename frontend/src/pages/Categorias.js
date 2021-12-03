@@ -1,10 +1,14 @@
 import React from 'react';
+import CategoryTable from "../components/Category/CategoryTable";
+import {Container} from "react-bootstrap"
 
 function Categorias () {
+
   return (
-    <div className='usuarios'>
-      <h1>EDITAR CATEGORIAS</h1>
-    </div>
+    <Container>
+      <CategoryTable/>
+    </Container>
+
   );
 }
 
