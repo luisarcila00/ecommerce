@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, Modal, Row, Col, Form, FloatingLabel, Alert} from "react-bootstrap"
 import {products} from "../../controllers/productsController"
-import {users} from "../../controllers/UsersController";
 
 const objForm = {
   _id: "",

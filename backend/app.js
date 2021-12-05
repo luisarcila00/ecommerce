@@ -20,6 +20,14 @@ if (!fs.existsSync(path.join(__dirname, '/public/images/products'))) fs.mkdirSyn
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api', require('./routes'));
 
+//Configuracion en produccion
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(__dirname + '/site/'))
+  app.use('*',(req,res)=>{
+    res.sendfile(__dirname+'/site/index.html')
+  })
+}
+
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
