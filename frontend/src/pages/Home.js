@@ -19,10 +19,10 @@ const Home = () => {
           </Row>
           <br></br>
           <Row>
-            <Col xs={{ order: 'last' }}><Cards/></Col>
-            <Col xs><Cards /></Col>
-            <Col xs><Cards /></Col>
-            <Col xs={{ order: 'first' }}><Cards/></Col>
+            <Col xs={{ order: 'last' }} ><Cards url={'/images/products/netflix_4.png'}/></Col>
+            <Col xs><Cards  url={'/images/products/plex.png'}/></Col>
+            <Col xs><Cards  url={'/images/products/amazon.png'}/></Col>
+            <Col xs={{ order: 'first' }}><Cards  url={'/images/products/194252818381.png'}/></Col>
           </Row>
             
         </Container>

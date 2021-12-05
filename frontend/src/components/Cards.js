@@ -1,10 +1,10 @@
 import {Card, Button} from 'react-bootstrap';
 
-const Cards = () => {
+const Cards = ({url}) => {
     return (
         <>
             <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src="https://picsum.photos/200/300" />
+                <Card.Img variant="top" src={url}/>
                 <Card.Body>
                     <Card.Title>Card Title</Card.Title>
                     <Card.Text>
